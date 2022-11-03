@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@daonomic/tests-common": "^0.2.2",
+    "@openzeppelin/contracts": "3.4.0",
+    "@openzeppelin/contracts-upgradeable": "3.4.0",
+    "@openzeppelin/truffle-upgrades": "^1.15.0",
+    "@truffle/hdwallet-provider": "^2.0.3",
+    "dotenv": "^16.0.0",
+    "truffle-plugin-verify": "^0.5.22"
+  }
+}

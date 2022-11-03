@@ -1,0 +1,2601 @@
+{
+  "contractName": "LibOrder",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/lib/LibOrder.sol\":\"LibOrder\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts-upgradeable/math/SafeMathUpgradeable.sol\":{\"keccak256\":\"0x0dd1e9b19801e3e7d900fbf4182d81e1afd23ad7be39504e33df6bbcba91d724\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5e30d594df25d0651c2cd6f85d856e5fc9f3dbae68d017e1da33eb3c7e2f1ecc\",\"dweb:/ipfs/QmPgkV99jZr3Zs9ex8dJ5j22oX4wDuDtMCnXNy67bTwgAB\"]},\"project:/contracts/lib/LibAsset.sol\":{\"keccak256\":\"0x6ae2984d9df72f4bac69b24510b4480305e025839aa0be5ca742f4498966f4b3\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://05cb5641186ddf198f819106e4fc4fec6d3e140c866ce85f78c023802883db3c\",\"dweb:/ipfs/QmYi4TrW1WW47aDFZGqGLRqNSXL8YvTXJN8DCugUWtk9oV\"]},\"project:/contracts/lib/LibMath.sol\":{\"keccak256\":\"0x2f116bd131b019ada88387b8b6d27bcfc39e6771b5d84653ec73188d7e7c6c7d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f0a288e1eff6bd7a330993ca3fef9dca0200795aaf1217bcb44c23a96361f25f\",\"dweb:/ipfs/QmQ2qVsjtumVZL2yhnCjjL6SNiTLvFSW2oQ8N9NoLAHYCr\"]},\"project:/contracts/lib/LibOrder.sol\":{\"keccak256\":\"0xe20832b7a4cbdfc910abd2894edb647e993e490970441ccd3283aef50e61e1f2\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f0a2bcedfda303653ba8968312f501b476e4921545924c8974a1293cc4381b73\",\"dweb:/ipfs/QmYe5xpXwYnRqw5fY8tkDM6SWvnrFEQbwM2uBC9dL2Fy4i\"]}},\"version\":1}",
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220409074be4eaf38df0f81f8468ed7f2d0b269bd2bfe8fa91633f06751ba36cf7764736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220409074be4eaf38df0f81f8468ed7f2d0b269bd2bfe8fa91633f06751ba36cf7764736f6c63430007060033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "106:1184:35:-:0;;;;;;;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "106:1184:35:-:0;;;;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\n\npragma solidity 0.7.6;\n\nimport \"./LibMath.sol\";\nimport \"./LibAsset.sol\";\nlibrary LibOrder {\n    using SafeMathUpgradeable for uint;\n\n    bytes32 constant ORDER_TYPEHASH = keccak256(\n        \"Order(address maker,Asset makeAsset,address taker,Asset takeAsset,bytes data)Asset(AssetType assetType,uint256 value)AssetType(bytes4 assetClass,bytes data)\"\n    );\n\n    struct Order {\n        address maker;\n        LibAsset.Asset makeAsset;\n        address taker;\n        LibAsset.Asset takeAsset;                \n        bytes data;\n    }\n\n    function hashKey(Order memory order) internal pure returns (bytes32) {        \n        return keccak256(abi.encode(\n                order.maker,\n                LibAsset.hash(order.makeAsset.assetType),\n                LibAsset.hash(order.takeAsset.assetType),                \n                order.data\n         ));        \n    }\n\n    function hash(Order memory order) internal pure returns (bytes32) {\n        return keccak256(abi.encode(\n                ORDER_TYPEHASH,\n                order.maker,\n                LibAsset.hash(order.makeAsset),\n                order.taker,\n                LibAsset.hash(order.takeAsset),                                \n                keccak256(order.data)\n            ));\n    }\n}\n",
+  "sourcePath": "/Volumes/Data/MetaSalt/smart_contracts/market/contracts/lib/LibOrder.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/lib/LibOrder.sol",
+    "exportedSymbols": {
+      "LibAsset": [
+        5138
+      ],
+      "LibMath": [
+        5455
+      ],
+      "LibOrder": [
+        5542
+      ],
+      "SafeMathUpgradeable": [
+        803
+      ]
+    },
+    "id": 5543,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5457,
+        "literals": [
+          "solidity",
+          "0.7",
+          ".6"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:22:35"
+      },
+      {
+        "absolutePath": "project:/contracts/lib/LibMath.sol",
+        "file": "./LibMath.sol",
+        "id": 5458,
+        "nodeType": "ImportDirective",
+        "scope": 5543,
+        "sourceUnit": 5456,
+        "src": "57:23:35",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "project:/contracts/lib/LibAsset.sol",
+        "file": "./LibAsset.sol",
+        "id": 5459,
+        "nodeType": "ImportDirective",
+        "scope": 5543,
+        "sourceUnit": 5139,
+        "src": "81:24:35",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "fullyImplemented": true,
+        "id": 5542,
+        "linearizedBaseContracts": [
+          5542
+        ],
+        "name": "LibOrder",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "id": 5462,
+            "libraryName": {
+              "id": 5460,
+              "name": "SafeMathUpgradeable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 803,
+              "src": "135:19:35",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_SafeMathUpgradeable_$803",
+                "typeString": "library SafeMathUpgradeable"
+              }
+            },
+            "nodeType": "UsingForDirective",
+            "src": "129:35:35",
+            "typeName": {
+              "id": 5461,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "159:4:35",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            }
+          },
+          {
+            "constant": true,
+            "id": 5467,
+            "mutability": "constant",
+            "name": "ORDER_TYPEHASH",
+            "nodeType": "VariableDeclaration",
+            "scope": 5542,
+            "src": "170:217:35",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes32",
+              "typeString": "bytes32"
+            },
+            "typeName": {
+              "id": 5463,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "170:7:35",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "value": {
+              "arguments": [
+                {
+                  "hexValue": "4f726465722861646472657373206d616b65722c4173736574206d616b6541737365742c616464726573732074616b65722c41737365742074616b6541737365742c6279746573206461746129417373657428417373657454797065206173736574547970652c75696e743235362076616c75652941737365745479706528627974657334206173736574436c6173732c6279746573206461746129",
+                  "id": 5465,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "string",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "223:158:35",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_stringliteral_74841602ef8bc0259a135b606bb44132c0ebfdc1466501e566cd8098c5490c2c",
+                    "typeString": "literal_string \"Order(address maker,Asset makeAsset,address taker,Asset takeAsset,bytes data)Asset(AssetType assetType,uint256 value)AssetType(bytes4 assetClass,bytes data)\""
+                  },
+                  "value": "Order(address maker,Asset makeAsset,address taker,Asset takeAsset,bytes data)Asset(AssetType assetType,uint256 value)AssetType(bytes4 assetClass,bytes data)"
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_stringliteral_74841602ef8bc0259a135b606bb44132c0ebfdc1466501e566cd8098c5490c2c",
+                    "typeString": "literal_string \"Order(address maker,Asset makeAsset,address taker,Asset takeAsset,bytes data)Asset(AssetType assetType,uint256 value)AssetType(bytes4 assetClass,bytes data)\""
+                  }
+                ],
+                "id": 5464,
+                "name": "keccak256",
+                "nodeType": "Identifier",
+                "overloadedDeclarations": [],
+                "referencedDeclaration": 4294967288,
+                "src": "204:9:35",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
+                  "typeString": "function (bytes memory) pure returns (bytes32)"
+                }
+              },
+              "id": 5466,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "functionCall",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "204:183:35",
+              "tryCall": false,
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "canonicalName": "LibOrder.Order",
+            "id": 5478,
+            "members": [
+              {
+                "constant": false,
+                "id": 5469,
+                "mutability": "mutable",
+                "name": "maker",
+                "nodeType": "VariableDeclaration",
+                "scope": 5478,
+                "src": "417:13:35",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 5468,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "417:7:35",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 5471,
+                "mutability": "mutable",
+                "name": "makeAsset",
+                "nodeType": "VariableDeclaration",
+                "scope": 5478,
+                "src": "440:24:35",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Asset_$5068_storage_ptr",
+                  "typeString": "struct LibAsset.Asset"
+                },
+                "typeName": {
+                  "id": 5470,
+                  "name": "LibAsset.Asset",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 5068,
+                  "src": "440:14:35",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Asset_$5068_storage_ptr",
+                    "typeString": "struct LibAsset.Asset"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 5473,
+                "mutability": "mutable",
+                "name": "taker",
+                "nodeType": "VariableDeclaration",
+                "scope": 5478,
+                "src": "474:13:35",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 5472,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "474:7:35",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 5475,
+                "mutability": "mutable",
+                "name": "takeAsset",
+                "nodeType": "VariableDeclaration",
+                "scope": 5478,
+                "src": "497:24:35",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Asset_$5068_storage_ptr",
+                  "typeString": "struct LibAsset.Asset"
+                },
+                "typeName": {
+                  "id": 5474,
+                  "name": "LibAsset.Asset",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 5068,
+                  "src": "497:14:35",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Asset_$5068_storage_ptr",
+                    "typeString": "struct LibAsset.Asset"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 5477,
+                "mutability": "mutable",
+                "name": "data",
+                "nodeType": "VariableDeclaration",
+                "scope": 5478,
+                "src": "547:10:35",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes_storage_ptr",
+                  "typeString": "bytes"
+                },
+                "typeName": {
+                  "id": 5476,
+                  "name": "bytes",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "547:5:35",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_storage_ptr",
+                    "typeString": "bytes"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "Order",
+            "nodeType": "StructDefinition",
+            "scope": 5542,
+            "src": "394:170:35",
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 5507,
+              "nodeType": "Block",
+              "src": "639:261:35",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "arguments": [
+                          {
+                            "expression": {
+                              "id": 5488,
+                              "name": "order",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 5480,
+                              "src": "702:5:35",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_Order_$5478_memory_ptr",
+                                "typeString": "struct LibOrder.Order memory"
+                              }
+                            },
+                            "id": 5489,
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "maker",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 5469,
+                            "src": "702:11:35",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          {
+                            "arguments": [
+                              {
+                                "expression": {
+                                  "expression": {
+                                    "id": 5492,
+                                    "name": "order",
+                                    "nodeType": "Identifier",
+                                    "overloadedDeclarations": [],
+                                    "referencedDeclaration": 5480,
+                                    "src": "745:5:35",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_struct$_Order_$5478_memory_ptr",
+                                      "typeString": "struct LibOrder.Order memory"
+                                    }
+                                  },
+                                  "id": 5493,
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "memberName": "makeAsset",
+                                  "nodeType": "MemberAccess",
+                                  "referencedDeclaration": 5471,
+                                  "src": "745:15:35",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_struct$_Asset_$5068_memory_ptr",
+                                    "typeString": "struct LibAsset.Asset memory"
+                                  }
+                                },
+                                "id": 5494,
+                                "isConstant": false,
+                                "isLValue": true,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "memberName": "assetType",
+                                "nodeType": "MemberAccess",
+                                "referencedDeclaration": 5065,
+                                "src": "745:25:35",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_struct$_AssetType_$5063_memory_ptr",
+                                  "typeString": "struct LibAsset.AssetType memory"
+                                }
+                              }
+                            ],
+                            "expression": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_struct$_AssetType_$5063_memory_ptr",
+                                  "typeString": "struct LibAsset.AssetType memory"
+                                }
+                              ],
+                              "expression": {
+                                "id": 5490,
+                                "name": "LibAsset",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 5138,
+                                "src": "731:8:35",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_type$_t_contract$_LibAsset_$5138_$",
+                                  "typeString": "type(library LibAsset)"
+                                }
+                              },
+                              "id": 5491,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "memberName": "hash",
+                              "nodeType": "MemberAccess",
+                              "referencedDeclaration": 5089,
+                              "src": "731:13:35",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_function_internal_pure$_t_struct$_AssetType_$5063_memory_ptr_$returns$_t_bytes32_$",
+                                "typeString": "function (struct LibAsset.AssetType memory) pure returns (bytes32)"
+                              }
+                            },
+                            "id": 5495,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "kind": "functionCall",
+                            "lValueRequested": false,
+                            "names": [],
+                            "nodeType": "FunctionCall",
+                            "src": "731:40:35",
+                            "tryCall": false,
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            }
+                          },
+                          {
+                            "arguments": [
+                              {
+                                "expression": {
+                                  "expression": {
+                                    "id": 5498,
+                                    "name": "order",
+                                    "nodeType": "Identifier",
+                                    "overloadedDeclarations": [],
+                                    "referencedDeclaration": 5480,
+                                    "src": "803:5:35",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_struct$_Order_$5478_memory_ptr",
+                                      "typeString": "struct LibOrder.Order memory"
+                                    }
+                                  },
+                                  "id": 5499,
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "memberName": "takeAsset",
+                                  "nodeType": "MemberAccess",
+                                  "referencedDeclaration": 5475,
+                                  "src": "803:15:35",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_struct$_Asset_$5068_memory_ptr",
+                                    "typeString": "struct LibAsset.Asset memory"
+                                  }
+                                },
+                                "id": 5500,
+                                "isConstant": false,
+                                "isLValue": true,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "memberName": "assetType",
+                                "nodeType": "MemberAccess",
+                                "referencedDeclaration": 5065,
+                                "src": "803:25:35",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_struct$_AssetType_$5063_memory_ptr",
+                                  "typeString": "struct LibAsset.AssetType memory"
+                                }
+                              }
+                            ],
+                            "expression": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_struct$_AssetType_$5063_memory_ptr",
+                                  "typeString": "struct LibAsset.AssetType memory"
+                                }
+                              ],
+                              "expression": {
+                                "id": 5496,
+                                "name": "LibAsset",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 5138,
+                                "src": "789:8:35",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_type$_t_contract$_LibAsset_$5138_$",
+                                  "typeString": "type(library LibAsset)"
+                                }
+                              },
+                              "id": 5497,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "memberName": "hash",
+                              "nodeType": "MemberAccess",
+                              "referencedDeclaration": 5089,
+                              "src": "789:13:35",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_function_internal_pure$_t_struct$_AssetType_$5063_memory_ptr_$returns$_t_bytes32_$",
+                                "typeString": "function (struct LibAsset.AssetType memory) pure returns (bytes32)"
+                              }
+                            },
+                            "id": 5501,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "kind": "functionCall",
+                            "lValueRequested": false,
+                            "names": [],
+                            "nodeType": "FunctionCall",
+                            "src": "789:40:35",
+                            "tryCall": false,
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            }
+                          },
+                          {
+                            "expression": {
+                              "id": 5502,
+                              "name": "order",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 5480,
+                              "src": "863:5:35",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_Order_$5478_memory_ptr",
+                                "typeString": "struct LibOrder.Order memory"
+                              }
+                            },
+                            "id": 5503,
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "data",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 5477,
+                            "src": "863:10:35",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bytes_memory_ptr",
+                              "typeString": "bytes memory"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            },
+                            {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            },
+                            {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            },
+                            {
+                              "typeIdentifier": "t_bytes_memory_ptr",
+                              "typeString": "bytes memory"
+                            }
+                          ],
+                          "expression": {
+                            "id": 5486,
+                            "name": "abi",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 4294967295,
+                            "src": "674:3:35",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_abi",
+                              "typeString": "abi"
+                            }
+                          },
+                          "id": 5487,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "memberName": "encode",
+                          "nodeType": "MemberAccess",
+                          "src": "674:10:35",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_abiencode_pure$__$returns$_t_bytes_memory_ptr_$",
+                            "typeString": "function () pure returns (bytes memory)"
+                          }
+                        },
+                        "id": 5504,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "674:210:35",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes_memory_ptr",
+                          "typeString": "bytes memory"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes_memory_ptr",
+                          "typeString": "bytes memory"
+                        }
+                      ],
+                      "id": 5485,
+                      "name": "keccak256",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 4294967288,
+                      "src": "664:9:35",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
+                        "typeString": "function (bytes memory) pure returns (bytes32)"
+                      }
+                    },
+                    "id": 5505,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "664:221:35",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "functionReturnParameters": 5484,
+                  "id": 5506,
+                  "nodeType": "Return",
+                  "src": "657:228:35"
+                }
+              ]
+            },
+            "id": 5508,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "hashKey",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5481,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5480,
+                  "mutability": "mutable",
+                  "name": "order",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5508,
+                  "src": "587:18:35",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Order_$5478_memory_ptr",
+                    "typeString": "struct LibOrder.Order"
+                  },
+                  "typeName": {
+                    "id": 5479,
+                    "name": "Order",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 5478,
+                    "src": "587:5:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Order_$5478_storage_ptr",
+                      "typeString": "struct LibOrder.Order"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "586:20:35"
+            },
+            "returnParameters": {
+              "id": 5484,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5483,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5508,
+                  "src": "630:7:35",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 5482,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "630:7:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "629:9:35"
+            },
+            "scope": 5542,
+            "src": "570:330:35",
+            "stateMutability": "pure",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 5540,
+              "nodeType": "Block",
+              "src": "972:316:35",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "arguments": [
+                          {
+                            "id": 5518,
+                            "name": "ORDER_TYPEHASH",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 5467,
+                            "src": "1027:14:35",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            }
+                          },
+                          {
+                            "expression": {
+                              "id": 5519,
+                              "name": "order",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 5510,
+                              "src": "1059:5:35",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_Order_$5478_memory_ptr",
+                                "typeString": "struct LibOrder.Order memory"
+                              }
+                            },
+                            "id": 5520,
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "maker",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 5469,
+                            "src": "1059:11:35",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          {
+                            "arguments": [
+                              {
+                                "expression": {
+                                  "id": 5523,
+                                  "name": "order",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 5510,
+                                  "src": "1102:5:35",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_struct$_Order_$5478_memory_ptr",
+                                    "typeString": "struct LibOrder.Order memory"
+                                  }
+                                },
+                                "id": 5524,
+                                "isConstant": false,
+                                "isLValue": true,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "memberName": "makeAsset",
+                                "nodeType": "MemberAccess",
+                                "referencedDeclaration": 5471,
+                                "src": "1102:15:35",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_struct$_Asset_$5068_memory_ptr",
+                                  "typeString": "struct LibAsset.Asset memory"
+                                }
+                              }
+                            ],
+                            "expression": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_struct$_Asset_$5068_memory_ptr",
+                                  "typeString": "struct LibAsset.Asset memory"
+                                }
+                              ],
+                              "expression": {
+                                "id": 5521,
+                                "name": "LibAsset",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 5138,
+                                "src": "1088:8:35",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_type$_t_contract$_LibAsset_$5138_$",
+                                  "typeString": "type(library LibAsset)"
+                                }
+                              },
+                              "id": 5522,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "memberName": "hash",
+                              "nodeType": "MemberAccess",
+                              "referencedDeclaration": 5110,
+                              "src": "1088:13:35",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_function_internal_pure$_t_struct$_Asset_$5068_memory_ptr_$returns$_t_bytes32_$",
+                                "typeString": "function (struct LibAsset.Asset memory) pure returns (bytes32)"
+                              }
+                            },
+                            "id": 5525,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "kind": "functionCall",
+                            "lValueRequested": false,
+                            "names": [],
+                            "nodeType": "FunctionCall",
+                            "src": "1088:30:35",
+                            "tryCall": false,
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            }
+                          },
+                          {
+                            "expression": {
+                              "id": 5526,
+                              "name": "order",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 5510,
+                              "src": "1136:5:35",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_Order_$5478_memory_ptr",
+                                "typeString": "struct LibOrder.Order memory"
+                              }
+                            },
+                            "id": 5527,
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "taker",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 5473,
+                            "src": "1136:11:35",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          {
+                            "arguments": [
+                              {
+                                "expression": {
+                                  "id": 5530,
+                                  "name": "order",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 5510,
+                                  "src": "1179:5:35",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_struct$_Order_$5478_memory_ptr",
+                                    "typeString": "struct LibOrder.Order memory"
+                                  }
+                                },
+                                "id": 5531,
+                                "isConstant": false,
+                                "isLValue": true,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "memberName": "takeAsset",
+                                "nodeType": "MemberAccess",
+                                "referencedDeclaration": 5475,
+                                "src": "1179:15:35",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_struct$_Asset_$5068_memory_ptr",
+                                  "typeString": "struct LibAsset.Asset memory"
+                                }
+                              }
+                            ],
+                            "expression": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_struct$_Asset_$5068_memory_ptr",
+                                  "typeString": "struct LibAsset.Asset memory"
+                                }
+                              ],
+                              "expression": {
+                                "id": 5528,
+                                "name": "LibAsset",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 5138,
+                                "src": "1165:8:35",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_type$_t_contract$_LibAsset_$5138_$",
+                                  "typeString": "type(library LibAsset)"
+                                }
+                              },
+                              "id": 5529,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "memberName": "hash",
+                              "nodeType": "MemberAccess",
+                              "referencedDeclaration": 5110,
+                              "src": "1165:13:35",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_function_internal_pure$_t_struct$_Asset_$5068_memory_ptr_$returns$_t_bytes32_$",
+                                "typeString": "function (struct LibAsset.Asset memory) pure returns (bytes32)"
+                              }
+                            },
+                            "id": 5532,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "kind": "functionCall",
+                            "lValueRequested": false,
+                            "names": [],
+                            "nodeType": "FunctionCall",
+                            "src": "1165:30:35",
+                            "tryCall": false,
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            }
+                          },
+                          {
+                            "arguments": [
+                              {
+                                "expression": {
+                                  "id": 5534,
+                                  "name": "order",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 5510,
+                                  "src": "1255:5:35",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_struct$_Order_$5478_memory_ptr",
+                                    "typeString": "struct LibOrder.Order memory"
+                                  }
+                                },
+                                "id": 5535,
+                                "isConstant": false,
+                                "isLValue": true,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "memberName": "data",
+                                "nodeType": "MemberAccess",
+                                "referencedDeclaration": 5477,
+                                "src": "1255:10:35",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_bytes_memory_ptr",
+                                  "typeString": "bytes memory"
+                                }
+                              }
+                            ],
+                            "expression": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bytes_memory_ptr",
+                                  "typeString": "bytes memory"
+                                }
+                              ],
+                              "id": 5533,
+                              "name": "keccak256",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 4294967288,
+                              "src": "1245:9:35",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
+                                "typeString": "function (bytes memory) pure returns (bytes32)"
+                              }
+                            },
+                            "id": 5536,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "kind": "functionCall",
+                            "lValueRequested": false,
+                            "names": [],
+                            "nodeType": "FunctionCall",
+                            "src": "1245:21:35",
+                            "tryCall": false,
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            },
+                            {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            },
+                            {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            },
+                            {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            },
+                            {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            },
+                            {
+                              "typeIdentifier": "t_bytes32",
+                              "typeString": "bytes32"
+                            }
+                          ],
+                          "expression": {
+                            "id": 5516,
+                            "name": "abi",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 4294967295,
+                            "src": "999:3:35",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_abi",
+                              "typeString": "abi"
+                            }
+                          },
+                          "id": 5517,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "memberName": "encode",
+                          "nodeType": "MemberAccess",
+                          "src": "999:10:35",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_abiencode_pure$__$returns$_t_bytes_memory_ptr_$",
+                            "typeString": "function () pure returns (bytes memory)"
+                          }
+                        },
+                        "id": 5537,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "999:281:35",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes_memory_ptr",
+                          "typeString": "bytes memory"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes_memory_ptr",
+                          "typeString": "bytes memory"
+                        }
+                      ],
+                      "id": 5515,
+                      "name": "keccak256",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 4294967288,
+                      "src": "989:9:35",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
+                        "typeString": "function (bytes memory) pure returns (bytes32)"
+                      }
+                    },
+                    "id": 5538,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "989:292:35",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "functionReturnParameters": 5514,
+                  "id": 5539,
+                  "nodeType": "Return",
+                  "src": "982:299:35"
+                }
+              ]
+            },
+            "id": 5541,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "hash",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5511,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5510,
+                  "mutability": "mutable",
+                  "name": "order",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5541,
+                  "src": "920:18:35",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Order_$5478_memory_ptr",
+                    "typeString": "struct LibOrder.Order"
+                  },
+                  "typeName": {
+                    "id": 5509,
+                    "name": "Order",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 5478,
+                    "src": "920:5:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Order_$5478_storage_ptr",
+                      "typeString": "struct LibOrder.Order"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "919:20:35"
+            },
+            "returnParameters": {
+              "id": 5514,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5513,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5541,
+                  "src": "963:7:35",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 5512,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "963:7:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "962:9:35"
+            },
+            "scope": 5542,
+            "src": "906:382:35",
+            "stateMutability": "pure",
+            "virtual": false,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 5543,
+        "src": "106:1184:35"
+      }
+    ],
+    "src": "33:1258:35"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "project:/contracts/lib/LibOrder.sol",
+      "exportedSymbols": {
+        "LibAsset": [
+          5138
+        ],
+        "LibMath": [
+          5455
+        ],
+        "LibOrder": [
+          5542
+        ],
+        "SafeMathUpgradeable": [
+          803
+        ]
+      },
+      "license": "MIT"
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "0.7",
+            ".6"
+          ]
+        },
+        "id": 5457,
+        "name": "PragmaDirective",
+        "src": "33:22:35"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 5456,
+          "absolutePath": "project:/contracts/lib/LibMath.sol",
+          "file": "./LibMath.sol",
+          "scope": 5543,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 5458,
+        "name": "ImportDirective",
+        "src": "57:23:35"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 5139,
+          "absolutePath": "project:/contracts/lib/LibAsset.sol",
+          "file": "./LibAsset.sol",
+          "scope": 5543,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 5459,
+        "name": "ImportDirective",
+        "src": "81:24:35"
+      },
+      {
+        "attributes": {
+          "abstract": false,
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "library",
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            5542
+          ],
+          "name": "LibOrder",
+          "scope": 5543
+        },
+        "children": [
+          {
+            "children": [
+              {
+                "attributes": {
+                  "name": "SafeMathUpgradeable",
+                  "referencedDeclaration": 803,
+                  "type": "library SafeMathUpgradeable"
+                },
+                "id": 5460,
+                "name": "UserDefinedTypeName",
+                "src": "135:19:35"
+              },
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 5461,
+                "name": "ElementaryTypeName",
+                "src": "159:4:35"
+              }
+            ],
+            "id": 5462,
+            "name": "UsingForDirective",
+            "src": "129:35:35"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "mutability": "constant",
+              "name": "ORDER_TYPEHASH",
+              "scope": 5542,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "bytes32",
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "bytes32",
+                  "type": "bytes32"
+                },
+                "id": 5463,
+                "name": "ElementaryTypeName",
+                "src": "170:7:35"
+              },
+              {
+                "attributes": {
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "isStructConstructorCall": false,
+                  "lValueRequested": false,
+                  "names": [
+                    null
+                  ],
+                  "tryCall": false,
+                  "type": "bytes32",
+                  "type_conversion": false
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_stringliteral_74841602ef8bc0259a135b606bb44132c0ebfdc1466501e566cd8098c5490c2c",
+                          "typeString": "literal_string \"Order(address maker,Asset makeAsset,address taker,Asset takeAsset,bytes data)Asset(AssetType assetType,uint256 value)AssetType(bytes4 assetClass,bytes data)\""
+                        }
+                      ],
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 4294967288,
+                      "type": "function (bytes memory) pure returns (bytes32)",
+                      "value": "keccak256"
+                    },
+                    "id": 5464,
+                    "name": "Identifier",
+                    "src": "204:9:35"
+                  },
+                  {
+                    "attributes": {
+                      "hexvalue": "4f726465722861646472657373206d616b65722c4173736574206d616b6541737365742c616464726573732074616b65722c41737365742074616b6541737365742c6279746573206461746129417373657428417373657454797065206173736574547970652c75696e743235362076616c75652941737365745479706528627974657334206173736574436c6173732c6279746573206461746129",
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "token": "string",
+                      "type": "literal_string \"Order(address maker,Asset makeAsset,address taker,Asset takeAsset,bytes data)Asset(AssetType assetType,uint256 value)AssetType(bytes4 assetClass,bytes data)\"",
+                      "value": "Order(address maker,Asset makeAsset,address taker,Asset takeAsset,bytes data)Asset(AssetType assetType,uint256 value)AssetType(bytes4 assetClass,bytes data)"
+                    },
+                    "id": 5465,
+                    "name": "Literal",
+                    "src": "223:158:35"
+                  }
+                ],
+                "id": 5466,
+                "name": "FunctionCall",
+                "src": "204:183:35"
+              }
+            ],
+            "id": 5467,
+            "name": "VariableDeclaration",
+            "src": "170:217:35"
+          },
+          {
+            "attributes": {
+              "canonicalName": "LibOrder.Order",
+              "name": "Order",
+              "scope": 5542,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "maker",
+                  "scope": 5478,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 5468,
+                    "name": "ElementaryTypeName",
+                    "src": "417:7:35"
+                  }
+                ],
+                "id": 5469,
+                "name": "VariableDeclaration",
+                "src": "417:13:35"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "makeAsset",
+                  "scope": 5478,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "struct LibAsset.Asset",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "LibAsset.Asset",
+                      "referencedDeclaration": 5068,
+                      "type": "struct LibAsset.Asset"
+                    },
+                    "id": 5470,
+                    "name": "UserDefinedTypeName",
+                    "src": "440:14:35"
+                  }
+                ],
+                "id": 5471,
+                "name": "VariableDeclaration",
+                "src": "440:24:35"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "taker",
+                  "scope": 5478,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 5472,
+                    "name": "ElementaryTypeName",
+                    "src": "474:7:35"
+                  }
+                ],
+                "id": 5473,
+                "name": "VariableDeclaration",
+                "src": "474:13:35"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "takeAsset",
+                  "scope": 5478,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "struct LibAsset.Asset",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "LibAsset.Asset",
+                      "referencedDeclaration": 5068,
+                      "type": "struct LibAsset.Asset"
+                    },
+                    "id": 5474,
+                    "name": "UserDefinedTypeName",
+                    "src": "497:14:35"
+                  }
+                ],
+                "id": 5475,
+                "name": "VariableDeclaration",
+                "src": "497:24:35"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "data",
+                  "scope": 5478,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "bytes",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "bytes",
+                      "type": "bytes"
+                    },
+                    "id": 5476,
+                    "name": "ElementaryTypeName",
+                    "src": "547:5:35"
+                  }
+                ],
+                "id": 5477,
+                "name": "VariableDeclaration",
+                "src": "547:10:35"
+              }
+            ],
+            "id": 5478,
+            "name": "StructDefinition",
+            "src": "394:170:35"
+          },
+          {
+            "attributes": {
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "hashKey",
+              "scope": 5542,
+              "stateMutability": "pure",
+              "virtual": false,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "order",
+                      "scope": 5508,
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "type": "struct LibOrder.Order",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "Order",
+                          "referencedDeclaration": 5478,
+                          "type": "struct LibOrder.Order"
+                        },
+                        "id": 5479,
+                        "name": "UserDefinedTypeName",
+                        "src": "587:5:35"
+                      }
+                    ],
+                    "id": 5480,
+                    "name": "VariableDeclaration",
+                    "src": "587:18:35"
+                  }
+                ],
+                "id": 5481,
+                "name": "ParameterList",
+                "src": "586:20:35"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "",
+                      "scope": 5508,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bytes32",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bytes32",
+                          "type": "bytes32"
+                        },
+                        "id": 5482,
+                        "name": "ElementaryTypeName",
+                        "src": "630:7:35"
+                      }
+                    ],
+                    "id": 5483,
+                    "name": "VariableDeclaration",
+                    "src": "630:7:35"
+                  }
+                ],
+                "id": 5484,
+                "name": "ParameterList",
+                "src": "629:9:35"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 5484
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "tryCall": false,
+                          "type": "bytes32",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bytes_memory_ptr",
+                                  "typeString": "bytes memory"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 4294967288,
+                              "type": "function (bytes memory) pure returns (bytes32)",
+                              "value": "keccak256"
+                            },
+                            "id": 5485,
+                            "name": "Identifier",
+                            "src": "664:9:35"
+                          },
+                          {
+                            "attributes": {
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "tryCall": false,
+                              "type": "bytes memory",
+                              "type_conversion": false
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_address",
+                                      "typeString": "address"
+                                    },
+                                    {
+                                      "typeIdentifier": "t_bytes32",
+                                      "typeString": "bytes32"
+                                    },
+                                    {
+                                      "typeIdentifier": "t_bytes32",
+                                      "typeString": "bytes32"
+                                    },
+                                    {
+                                      "typeIdentifier": "t_bytes_memory_ptr",
+                                      "typeString": "bytes memory"
+                                    }
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "member_name": "encode",
+                                  "type": "function () pure returns (bytes memory)"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 4294967295,
+                                      "type": "abi",
+                                      "value": "abi"
+                                    },
+                                    "id": 5486,
+                                    "name": "Identifier",
+                                    "src": "674:3:35"
+                                  }
+                                ],
+                                "id": 5487,
+                                "name": "MemberAccess",
+                                "src": "674:10:35"
+                              },
+                              {
+                                "attributes": {
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "maker",
+                                  "referencedDeclaration": 5469,
+                                  "type": "address"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 5480,
+                                      "type": "struct LibOrder.Order memory",
+                                      "value": "order"
+                                    },
+                                    "id": 5488,
+                                    "name": "Identifier",
+                                    "src": "702:5:35"
+                                  }
+                                ],
+                                "id": 5489,
+                                "name": "MemberAccess",
+                                "src": "702:11:35"
+                              },
+                              {
+                                "attributes": {
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "isStructConstructorCall": false,
+                                  "lValueRequested": false,
+                                  "names": [
+                                    null
+                                  ],
+                                  "tryCall": false,
+                                  "type": "bytes32",
+                                  "type_conversion": false
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": [
+                                        {
+                                          "typeIdentifier": "t_struct$_AssetType_$5063_memory_ptr",
+                                          "typeString": "struct LibAsset.AssetType memory"
+                                        }
+                                      ],
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "member_name": "hash",
+                                      "referencedDeclaration": 5089,
+                                      "type": "function (struct LibAsset.AssetType memory) pure returns (bytes32)"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 5138,
+                                          "type": "type(library LibAsset)",
+                                          "value": "LibAsset"
+                                        },
+                                        "id": 5490,
+                                        "name": "Identifier",
+                                        "src": "731:8:35"
+                                      }
+                                    ],
+                                    "id": 5491,
+                                    "name": "MemberAccess",
+                                    "src": "731:13:35"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "isConstant": false,
+                                      "isLValue": true,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "member_name": "assetType",
+                                      "referencedDeclaration": 5065,
+                                      "type": "struct LibAsset.AssetType memory"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "isConstant": false,
+                                          "isLValue": true,
+                                          "isPure": false,
+                                          "lValueRequested": false,
+                                          "member_name": "makeAsset",
+                                          "referencedDeclaration": 5471,
+                                          "type": "struct LibAsset.Asset memory"
+                                        },
+                                        "children": [
+                                          {
+                                            "attributes": {
+                                              "overloadedDeclarations": [
+                                                null
+                                              ],
+                                              "referencedDeclaration": 5480,
+                                              "type": "struct LibOrder.Order memory",
+                                              "value": "order"
+                                            },
+                                            "id": 5492,
+                                            "name": "Identifier",
+                                            "src": "745:5:35"
+                                          }
+                                        ],
+                                        "id": 5493,
+                                        "name": "MemberAccess",
+                                        "src": "745:15:35"
+                                      }
+                                    ],
+                                    "id": 5494,
+                                    "name": "MemberAccess",
+                                    "src": "745:25:35"
+                                  }
+                                ],
+                                "id": 5495,
+                                "name": "FunctionCall",
+                                "src": "731:40:35"
+                              },
+                              {
+                                "attributes": {
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "isStructConstructorCall": false,
+                                  "lValueRequested": false,
+                                  "names": [
+                                    null
+                                  ],
+                                  "tryCall": false,
+                                  "type": "bytes32",
+                                  "type_conversion": false
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": [
+                                        {
+                                          "typeIdentifier": "t_struct$_AssetType_$5063_memory_ptr",
+                                          "typeString": "struct LibAsset.AssetType memory"
+                                        }
+                                      ],
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "member_name": "hash",
+                                      "referencedDeclaration": 5089,
+                                      "type": "function (struct LibAsset.AssetType memory) pure returns (bytes32)"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 5138,
+                                          "type": "type(library LibAsset)",
+                                          "value": "LibAsset"
+                                        },
+                                        "id": 5496,
+                                        "name": "Identifier",
+                                        "src": "789:8:35"
+                                      }
+                                    ],
+                                    "id": 5497,
+                                    "name": "MemberAccess",
+                                    "src": "789:13:35"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "isConstant": false,
+                                      "isLValue": true,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "member_name": "assetType",
+                                      "referencedDeclaration": 5065,
+                                      "type": "struct LibAsset.AssetType memory"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "isConstant": false,
+                                          "isLValue": true,
+                                          "isPure": false,
+                                          "lValueRequested": false,
+                                          "member_name": "takeAsset",
+                                          "referencedDeclaration": 5475,
+                                          "type": "struct LibAsset.Asset memory"
+                                        },
+                                        "children": [
+                                          {
+                                            "attributes": {
+                                              "overloadedDeclarations": [
+                                                null
+                                              ],
+                                              "referencedDeclaration": 5480,
+                                              "type": "struct LibOrder.Order memory",
+                                              "value": "order"
+                                            },
+                                            "id": 5498,
+                                            "name": "Identifier",
+                                            "src": "803:5:35"
+                                          }
+                                        ],
+                                        "id": 5499,
+                                        "name": "MemberAccess",
+                                        "src": "803:15:35"
+                                      }
+                                    ],
+                                    "id": 5500,
+                                    "name": "MemberAccess",
+                                    "src": "803:25:35"
+                                  }
+                                ],
+                                "id": 5501,
+                                "name": "FunctionCall",
+                                "src": "789:40:35"
+                              },
+                              {
+                                "attributes": {
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "data",
+                                  "referencedDeclaration": 5477,
+                                  "type": "bytes memory"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 5480,
+                                      "type": "struct LibOrder.Order memory",
+                                      "value": "order"
+                                    },
+                                    "id": 5502,
+                                    "name": "Identifier",
+                                    "src": "863:5:35"
+                                  }
+                                ],
+                                "id": 5503,
+                                "name": "MemberAccess",
+                                "src": "863:10:35"
+                              }
+                            ],
+                            "id": 5504,
+                            "name": "FunctionCall",
+                            "src": "674:210:35"
+                          }
+                        ],
+                        "id": 5505,
+                        "name": "FunctionCall",
+                        "src": "664:221:35"
+                      }
+                    ],
+                    "id": 5506,
+                    "name": "Return",
+                    "src": "657:228:35"
+                  }
+                ],
+                "id": 5507,
+                "name": "Block",
+                "src": "639:261:35"
+              }
+            ],
+            "id": 5508,
+            "name": "FunctionDefinition",
+            "src": "570:330:35"
+          },
+          {
+            "attributes": {
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "hash",
+              "scope": 5542,
+              "stateMutability": "pure",
+              "virtual": false,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "order",
+                      "scope": 5541,
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "type": "struct LibOrder.Order",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "Order",
+                          "referencedDeclaration": 5478,
+                          "type": "struct LibOrder.Order"
+                        },
+                        "id": 5509,
+                        "name": "UserDefinedTypeName",
+                        "src": "920:5:35"
+                      }
+                    ],
+                    "id": 5510,
+                    "name": "VariableDeclaration",
+                    "src": "920:18:35"
+                  }
+                ],
+                "id": 5511,
+                "name": "ParameterList",
+                "src": "919:20:35"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "",
+                      "scope": 5541,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bytes32",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bytes32",
+                          "type": "bytes32"
+                        },
+                        "id": 5512,
+                        "name": "ElementaryTypeName",
+                        "src": "963:7:35"
+                      }
+                    ],
+                    "id": 5513,
+                    "name": "VariableDeclaration",
+                    "src": "963:7:35"
+                  }
+                ],
+                "id": 5514,
+                "name": "ParameterList",
+                "src": "962:9:35"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 5514
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "tryCall": false,
+                          "type": "bytes32",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bytes_memory_ptr",
+                                  "typeString": "bytes memory"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 4294967288,
+                              "type": "function (bytes memory) pure returns (bytes32)",
+                              "value": "keccak256"
+                            },
+                            "id": 5515,
+                            "name": "Identifier",
+                            "src": "989:9:35"
+                          },
+                          {
+                            "attributes": {
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "tryCall": false,
+                              "type": "bytes memory",
+                              "type_conversion": false
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_bytes32",
+                                      "typeString": "bytes32"
+                                    },
+                                    {
+                                      "typeIdentifier": "t_address",
+                                      "typeString": "address"
+                                    },
+                                    {
+                                      "typeIdentifier": "t_bytes32",
+                                      "typeString": "bytes32"
+                                    },
+                                    {
+                                      "typeIdentifier": "t_address",
+                                      "typeString": "address"
+                                    },
+                                    {
+                                      "typeIdentifier": "t_bytes32",
+                                      "typeString": "bytes32"
+                                    },
+                                    {
+                                      "typeIdentifier": "t_bytes32",
+                                      "typeString": "bytes32"
+                                    }
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "member_name": "encode",
+                                  "type": "function () pure returns (bytes memory)"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 4294967295,
+                                      "type": "abi",
+                                      "value": "abi"
+                                    },
+                                    "id": 5516,
+                                    "name": "Identifier",
+                                    "src": "999:3:35"
+                                  }
+                                ],
+                                "id": 5517,
+                                "name": "MemberAccess",
+                                "src": "999:10:35"
+                              },
+                              {
+                                "attributes": {
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 5467,
+                                  "type": "bytes32",
+                                  "value": "ORDER_TYPEHASH"
+                                },
+                                "id": 5518,
+                                "name": "Identifier",
+                                "src": "1027:14:35"
+                              },
+                              {
+                                "attributes": {
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "maker",
+                                  "referencedDeclaration": 5469,
+                                  "type": "address"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 5510,
+                                      "type": "struct LibOrder.Order memory",
+                                      "value": "order"
+                                    },
+                                    "id": 5519,
+                                    "name": "Identifier",
+                                    "src": "1059:5:35"
+                                  }
+                                ],
+                                "id": 5520,
+                                "name": "MemberAccess",
+                                "src": "1059:11:35"
+                              },
+                              {
+                                "attributes": {
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "isStructConstructorCall": false,
+                                  "lValueRequested": false,
+                                  "names": [
+                                    null
+                                  ],
+                                  "tryCall": false,
+                                  "type": "bytes32",
+                                  "type_conversion": false
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": [
+                                        {
+                                          "typeIdentifier": "t_struct$_Asset_$5068_memory_ptr",
+                                          "typeString": "struct LibAsset.Asset memory"
+                                        }
+                                      ],
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "member_name": "hash",
+                                      "referencedDeclaration": 5110,
+                                      "type": "function (struct LibAsset.Asset memory) pure returns (bytes32)"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 5138,
+                                          "type": "type(library LibAsset)",
+                                          "value": "LibAsset"
+                                        },
+                                        "id": 5521,
+                                        "name": "Identifier",
+                                        "src": "1088:8:35"
+                                      }
+                                    ],
+                                    "id": 5522,
+                                    "name": "MemberAccess",
+                                    "src": "1088:13:35"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "isConstant": false,
+                                      "isLValue": true,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "member_name": "makeAsset",
+                                      "referencedDeclaration": 5471,
+                                      "type": "struct LibAsset.Asset memory"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 5510,
+                                          "type": "struct LibOrder.Order memory",
+                                          "value": "order"
+                                        },
+                                        "id": 5523,
+                                        "name": "Identifier",
+                                        "src": "1102:5:35"
+                                      }
+                                    ],
+                                    "id": 5524,
+                                    "name": "MemberAccess",
+                                    "src": "1102:15:35"
+                                  }
+                                ],
+                                "id": 5525,
+                                "name": "FunctionCall",
+                                "src": "1088:30:35"
+                              },
+                              {
+                                "attributes": {
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "taker",
+                                  "referencedDeclaration": 5473,
+                                  "type": "address"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 5510,
+                                      "type": "struct LibOrder.Order memory",
+                                      "value": "order"
+                                    },
+                                    "id": 5526,
+                                    "name": "Identifier",
+                                    "src": "1136:5:35"
+                                  }
+                                ],
+                                "id": 5527,
+                                "name": "MemberAccess",
+                                "src": "1136:11:35"
+                              },
+                              {
+                                "attributes": {
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "isStructConstructorCall": false,
+                                  "lValueRequested": false,
+                                  "names": [
+                                    null
+                                  ],
+                                  "tryCall": false,
+                                  "type": "bytes32",
+                                  "type_conversion": false
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": [
+                                        {
+                                          "typeIdentifier": "t_struct$_Asset_$5068_memory_ptr",
+                                          "typeString": "struct LibAsset.Asset memory"
+                                        }
+                                      ],
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "member_name": "hash",
+                                      "referencedDeclaration": 5110,
+                                      "type": "function (struct LibAsset.Asset memory) pure returns (bytes32)"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 5138,
+                                          "type": "type(library LibAsset)",
+                                          "value": "LibAsset"
+                                        },
+                                        "id": 5528,
+                                        "name": "Identifier",
+                                        "src": "1165:8:35"
+                                      }
+                                    ],
+                                    "id": 5529,
+                                    "name": "MemberAccess",
+                                    "src": "1165:13:35"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "isConstant": false,
+                                      "isLValue": true,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "member_name": "takeAsset",
+                                      "referencedDeclaration": 5475,
+                                      "type": "struct LibAsset.Asset memory"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 5510,
+                                          "type": "struct LibOrder.Order memory",
+                                          "value": "order"
+                                        },
+                                        "id": 5530,
+                                        "name": "Identifier",
+                                        "src": "1179:5:35"
+                                      }
+                                    ],
+                                    "id": 5531,
+                                    "name": "MemberAccess",
+                                    "src": "1179:15:35"
+                                  }
+                                ],
+                                "id": 5532,
+                                "name": "FunctionCall",
+                                "src": "1165:30:35"
+                              },
+                              {
+                                "attributes": {
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "isStructConstructorCall": false,
+                                  "lValueRequested": false,
+                                  "names": [
+                                    null
+                                  ],
+                                  "tryCall": false,
+                                  "type": "bytes32",
+                                  "type_conversion": false
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": [
+                                        {
+                                          "typeIdentifier": "t_bytes_memory_ptr",
+                                          "typeString": "bytes memory"
+                                        }
+                                      ],
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 4294967288,
+                                      "type": "function (bytes memory) pure returns (bytes32)",
+                                      "value": "keccak256"
+                                    },
+                                    "id": 5533,
+                                    "name": "Identifier",
+                                    "src": "1245:9:35"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "isConstant": false,
+                                      "isLValue": true,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "member_name": "data",
+                                      "referencedDeclaration": 5477,
+                                      "type": "bytes memory"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 5510,
+                                          "type": "struct LibOrder.Order memory",
+                                          "value": "order"
+                                        },
+                                        "id": 5534,
+                                        "name": "Identifier",
+                                        "src": "1255:5:35"
+                                      }
+                                    ],
+                                    "id": 5535,
+                                    "name": "MemberAccess",
+                                    "src": "1255:10:35"
+                                  }
+                                ],
+                                "id": 5536,
+                                "name": "FunctionCall",
+                                "src": "1245:21:35"
+                              }
+                            ],
+                            "id": 5537,
+                            "name": "FunctionCall",
+                            "src": "999:281:35"
+                          }
+                        ],
+                        "id": 5538,
+                        "name": "FunctionCall",
+                        "src": "989:292:35"
+                      }
+                    ],
+                    "id": 5539,
+                    "name": "Return",
+                    "src": "982:299:35"
+                  }
+                ],
+                "id": 5540,
+                "name": "Block",
+                "src": "972:316:35"
+              }
+            ],
+            "id": 5541,
+            "name": "FunctionDefinition",
+            "src": "906:382:35"
+          }
+        ],
+        "id": 5542,
+        "name": "ContractDefinition",
+        "src": "106:1184:35"
+      }
+    ],
+    "id": 5543,
+    "name": "SourceUnit",
+    "src": "33:1258:35"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.7.6+commit.7338295f.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.5",
+  "updatedAt": "2022-10-25T04:56:34.532Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
